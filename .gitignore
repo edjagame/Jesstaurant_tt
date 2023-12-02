@@ -1,1 +1,3 @@
 trainsenv/
+__pycache__/
+db.sqlite3
