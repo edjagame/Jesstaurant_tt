@@ -8,10 +8,10 @@
 <h2>Trips</h2>
 {% for trip in Trips %}
   <div>
-    <h3>Trip #{{ trip.trip_id }}<h3>
+    <h3>Trip #{{ trip.trip_id }}</h3>
     <p>
-    From {{ trip.route.start_station }}<br>
-    To {{ trip.route.end_station }}<br>
+    From {{ trip.route.start_station.name }}<br>
+    To {{ trip.route.end_station.name }}<br>
     {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
     </p>
     <p>
