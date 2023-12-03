@@ -6,6 +6,14 @@ from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
     customer_id = forms.IntegerField(label='User ID')
+    
+    def clean_customer_id(self):
+        customer_id = self.cleaned_data["customer_id"]
+        if customer_id not in list(Passenger.objects.values_list('customer_id', flat=True)):
+            raise ValidationError(
+                "User does not exist."
+            )
+        return customer_id
 
 
 class PassengerForm(forms.ModelForm):
