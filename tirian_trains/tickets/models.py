@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from django.db import models
 from django.urls import reverse
 
@@ -7,7 +7,7 @@ class Passenger(models.Model):
     last_name = models.CharField(max_length=100, default="Doe")
     given_name = models.CharField(max_length=100, default="John")
     middle_initial = models.CharField(max_length=2, blank=True)
-    birth_date = models.DateField(auto_now_add=True)
+    birth_date = models.DateField(default=datetime.date.today)
     gender = models.CharField(max_length=100, blank=True)
 
     def get_age(self):

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <link rel="stylesheet" href="{% static 'django_hotdog_stylesheet.css' %}">
+    <title>{% block title %}My amazing site{% endblock %}</title>
+    {% block styles %}{% endblock %}
+  </head>
+  <body>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

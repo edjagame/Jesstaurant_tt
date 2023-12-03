@@ -1,4 +1,5 @@
-from datetime import datetime
+import datetime
+from django.utils import timezone
 from django.db import models
 from django.urls import reverse
 
@@ -20,7 +21,7 @@ class Route(models.Model):
         ('Inter-town', 'Inter-town')
     ]
     route_type = models.CharField(max_length=10, choices=route_type_choices)
-    pricing_date_start = models.DateField(auto_now_add=True)
+    pricing_date_start = models.DateField(default=datetime.date.today)
     price = models.FloatField(default=0)
     start_station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='start')
     end_station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='end')
@@ -35,8 +36,8 @@ class Route(models.Model):
 
 class Trip(models.Model):
     trip_id = models.IntegerField(primary_key=True, default=000000)
-    departure = models.DateTimeField(auto_now_add=True)
-    arrival = models.DateTimeField(auto_now_add=True)
+    departure = models.DateTimeField(default=timezone.now)
+    arrival = models.DateTimeField(default=timezone.now)
     route = models.ForeignKey(Route, on_delete=models.CASCADE) 
     train = models.ForeignKey("trains.Train", on_delete=models.CASCADE) 
 

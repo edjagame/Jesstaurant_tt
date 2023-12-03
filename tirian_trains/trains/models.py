@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from django.db import models
 from django.urls import reverse
 
@@ -32,7 +32,7 @@ class Train(models.Model):
 
 class Maintenance(models.Model):
     maintenance_id = models.IntegerField(primary_key=True, default=000000)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=datetime.date.today)
     crew_in_charge = models.CharField(max_length=200, default="John Doe")
     task = models.CharField(max_length=200, default="Routine inspection")
     condition_choices = [

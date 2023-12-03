@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Tirian Trains {% endblock %}
+{% block content %}
+
+<h1>Welcome to Tirian Trains</h1>
+
+<form action="{% url 'tickets:passenger-sign-in' %}">
+    <input type="submit" value="Book Ticket" />
+</form>
+ 
+{% endblock %}

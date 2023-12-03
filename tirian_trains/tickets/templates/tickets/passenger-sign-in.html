@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Tirian Trains Login {% endblock %}
+{% block content %}
+
+
+<h1>Login or Create User to book a ticket.</h1>
+
+<form action="{% url 'tickets:passenger-login' %}">
+    <input type="submit" value="Login" />
+</form>
+
+<h2>OR</h2>
+
+<form action="{% url 'tickets:passenger-create' %}">
+    <input type="submit" value="Create User" />
+</form>
+
+ 
+{% endblock %}
