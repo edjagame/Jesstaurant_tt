@@ -21,10 +21,10 @@ class Train(models.Model):
     has_food_service = models.BooleanField(default=False)
 
     def model(self):
-        return f"{self.series_type}-{str(self.model_number):03d}"
+        return f"{self.series_type}-{str(self.model_number)}"
 
     def __str__(self):
-        return f"{self.train_id}: {self.name}"
+        return f"{self.train_id}: {self.model()}"
 
     def get_absolute_url(self): 
         return reverse('trains:train-details', kwargs={'pk':self.pk})
