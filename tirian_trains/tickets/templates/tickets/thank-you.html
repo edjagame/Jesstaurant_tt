@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Confirmation Screen {% endblock %}
+{% block content %}
+
+<h1>Thank you for RAILING the ROADS with TIRIAN TRAINS!</h1>
+
+<h2>Ticket Details</h2>
+<h3> Ticket #{{ ticket.ticket_id }} </h3>
+  <p>
+    From {{ ticket.trip.route.start_station.name }}<br>
+    To {{ ticket.trip.route.end_station.name }}<br>
+    {{ ticket.trip.departure|date:"M d, Y H:i" }} - {{ ticket.trip.arrival|date:"M d, Y H:i" }} ({{ ticket.trip.get_duration }})<br>
+  </p>
+  <p>
+    {{ ticket.trip.route.price }} Lion Coins
+  </p>
+  <p>
+    Passenger #{{ ticket.passenger.customer_id }}: {{ ticket.passenger.given_name }} {{ ticket.passenger.middle_initial }} {{ ticket.last_name }}
+  </p>
+  <form action="/">
+    <input type="submit" value="Back to Homepage" />
+  </form>
+{% endblock %}

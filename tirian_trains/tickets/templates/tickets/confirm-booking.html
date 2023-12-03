@@ -1,28 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} Tirian Trains {% endblock %}
+{% block title %} Confirmation Screen {% endblock %}
 {% block content %}
 
-<h1>Book a Ticket</h1>
-<h3>Logged in as User {{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}</h3>
-<h2>Trips</h2>
-{% for trip in Trips %}
-  <div>
-    <h3>Trip #{{ trip.trip_id }}</h3>
-    <p>
+<h1>Confirm Booking</h1>
+<p>Please ensure all the trip details are correct
+<h2>Trip Details:</h2>
+ <p>
     From {{ trip.route.start_station.name }}<br>
     To {{ trip.route.end_station.name }}<br>
     {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
-    </p>
-    <p>
+  </p>
+  <p>
     {{ trip.route.price }} Lion Coins
-    </p>
-    <form action="/book-ticket" method='POST'>
+  </p>
+  <p>
+    Passenger #{{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}
+  </p>
+  <form action="/confirm-booking" method='POST'>
       {% csrf_token %} 
       <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
       <input type="hidden" id="trip_id" name="trip_id" value={{ trip.trip_id }}>
-      <input type="submit" value="Book">
+      <input type="submit" value="Confirm Booking">
     </form>
-  </div>
-{% endfor %}
 {% endblock %}
