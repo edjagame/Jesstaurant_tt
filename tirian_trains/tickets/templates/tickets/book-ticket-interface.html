@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Tirian Trains {% endblock %}
+{% block content %}
+
+<h1>Book a Ticket</h1>
+<h2>Logged in as User {{ passenger.customer_id }}: {{ passenger.given_name }} {{ passenger.middle_initial }} {{passenger.last_name }}</h2>
+  
+{% endblock %}
