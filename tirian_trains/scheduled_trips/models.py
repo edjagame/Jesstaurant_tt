@@ -40,6 +40,14 @@ class Trip(models.Model):
     arrival = models.DateTimeField(default=timezone.now)
     route = models.ForeignKey(Route, on_delete=models.CASCADE) 
     train = models.ForeignKey("trains.Train", on_delete=models.CASCADE) 
+    
+    @property
+    def get_duration(self):
+        duration = self.arrival-self.departure
+        duration_seconds = duration.days * 86400 + duration.seconds
+        hours = int(duration_seconds/3600)
+        min = int((duration_seconds%3600)/60)
+        return f"{hours}H {min}M"
 
     def __str__(self):
         return f"{self.trip_id}"

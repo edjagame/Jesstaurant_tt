@@ -4,6 +4,19 @@
 {% block content %}
 
 <h1>Book a Ticket</h1>
-<h2>Logged in as User {{ passenger.customer_id }}: {{ passenger.given_name }} {{ passenger.middle_initial }} {{passenger.last_name }}</h2>
-  
+<h3>Logged in as User {{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}</h3>
+<h2>Trips</h2>
+{% for trip in Trips %}
+  <div>
+    <h3>Trip #{{ trip.trip_id }}<h3>
+    <p>
+    From {{ trip.route.start_station }}<br>
+    To {{ trip.route.end_station }}<br>
+    {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
+    </p>
+    <p>
+    {{ trip.route.price }} Lion Coins
+    </p>
+  </div>
+{% endfor %}
 {% endblock %}

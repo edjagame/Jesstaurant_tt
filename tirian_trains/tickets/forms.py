@@ -19,7 +19,9 @@ class PassengerForm(forms.ModelForm):
 
     def clean_birth_date(self):
         birth_date = self.cleaned_data["birth_date"]
-        if birth_date > datetime.date.today():
-            raise ValidationError(
-                "Not yet born."
-            )
+        if birth_date:
+            if birth_date > datetime.date.today():
+                raise ValidationError(
+                    "Not yet born."
+                )
+        return birth_date

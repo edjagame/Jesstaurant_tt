@@ -1,20 +1,30 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from .forms import LoginForm, PassengerForm
 from .models import Passenger
+from scheduled_trips.models import Trip
+
 def homepage_view(request):
     return render(request, 'tickets/homepage.html')
 
 def passenger_sign_in_view(request):
     return render(request, 'tickets/passenger-sign-in.html')
 
+def book_ticket_interface_view(request):
+    context = {'user':Passenger.objects.get(pk=request.session.get("customer_id")),
+               'Trips':Trip.objects.all()
+               }
+    return render(request, 'tickets/book-ticket-interface.html', context)
+
 def passenger_login_view(request):
     if request.method == 'POST':
         form=LoginForm(request.POST)
         if form.is_valid():
             customer_id=form.cleaned_data["customer_id"]
-            return render(request, 'tickets/book-ticket-interface.html', {'passenger':Passenger.objects.get(pk=customer_id)})
+            request.session['customer_id'] = customer_id
+            return redirect('tickets:book-ticket') 
         else:
             return render(request, 'tickets/passenger-login.html', {'form': form})
     else:
@@ -50,8 +60,9 @@ def passenger_create_view(request):
                     gender=gender
                 )
             p.save()
-
-            return render(request, 'tickets/book-ticket-interface.html', {'passenger':Passenger.objects.get(pk=customer_id)})
+            
+            request.session["customer_id"]=customer_id
+            return redirect('tickets:book-ticket')
         else:
             return render(request, 'tickets/passenger-create.html',{'form': form})
     else:    
@@ -59,5 +70,4 @@ def passenger_create_view(request):
 
     return render(request, 'tickets/passenger-create.html',{'form': form})
 
-def book_ticket_interface_view(request):
-    return render(request, 'tickets/book-ticket-interface.html')
+

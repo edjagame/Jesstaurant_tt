@@ -17,7 +17,7 @@ class Passenger(models.Model):
        return f"{self.customer_id} - {self.last_name}, {self.given_name} {self.middle_initial}" 
 
     def get_absolute_url(self):
-        return reverse('tickets:passenger-details', kwargs={'pk':self.pk})
+        return reverse('tickets:passenger-details')
 
 
 class Ticket(models.Model):
