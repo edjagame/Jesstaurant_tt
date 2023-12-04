@@ -18,7 +18,15 @@
   <p>
     Passenger #{{ ticket.passenger.customer_id }}: {{ ticket.passenger.given_name }} {{ ticket.passenger.middle_initial }} {{ ticket.last_name }}
   </p>
+
+  <form action="/login" method="post">
+    {% csrf_token %}
+    <input type="hidden" id="customer_id" name="customer_id" value={{ ticket.passenger.customer_id }}>
+    <input type="submit" value="Book Another">
+  </form>
+
   <form action="/">
     <input type="submit" value="Back to Homepage" />
   </form>
+
 {% endblock %}

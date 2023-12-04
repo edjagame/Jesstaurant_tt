@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Confirmation Screen {% endblock %}
+{% block content %}
+
+<h1>Confirm Cancellation of Ticket</h1>
+<p>Please ensure all the ticket details are correct.
+<h2>Ticket Details:</h2>
+<h3>Ticket #{{ ticket.ticket_id }}</h3>
+<h3>Trip #{{ticket.trip.trip_id }}</h3>
+ <p>
+    From {{ trip.route.start_station.name }}<br>
+    To {{ trip.route.end_station.name }}<br>
+    {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
+  </p>
+  <p>
+    {{ trip.route.price }} Lion Coins
+  </p>
+  <p>
+    Passenger #{{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}
+  </p>
+  <form action="/confirm-remove" method='POST'>
+      {% csrf_token %} 
+      <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
+      <input type="hidden" id="ticket_id" name="ticket_id" value={{ ticket.ticket_id }}> 
+      <input type="submit" value="Confirm Cancellation">
+    </form>
+{% endblock %}

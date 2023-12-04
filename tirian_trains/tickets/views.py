@@ -18,9 +18,19 @@ def book_ticket_interface_view(request):
         trip_id=request.POST.get("trip_id")
         request.session['customer_id'] = customer_id
         request.session['trip_id'] = trip_id
+        if request.POST.get("remove"):
+            ticket_id=request.POST.get("ticket_id")
+            request.session['ticket_id'] = ticket_id
+            return redirect('tickets:confirm-remove')
         return redirect('tickets:confirm-booking')
-    context = {'user':Passenger.objects.get(pk=request.session.get("customer_id")),
-               'Trips':Trip.objects.all()
+    customer_id=request.session.get("customer_id")
+    currentTickets = list(Ticket.objects.raw("""
+                                        SELECT ticket_id 
+                                        FROM tickets_ticket 
+                                        WHERE passenger_id = %s""",[customer_id])) 
+    context = {'user':Passenger.objects.get(pk=customer_id),
+               'Trips':Trip.objects.all(),
+               'currentTickets':currentTickets
                }
     return render(request, 'tickets/book-ticket-interface.html', context)
 
@@ -49,8 +59,25 @@ def confirm_booking_view(request):
             }
     return render(request, 'tickets/confirm-booking.html', context)
 
+def confirm_remove_view(request):
+    if request.method == 'POST':
+        customer_id = request.POST.get("customer_id")
+        request.session['customer_id'] = customer_id
+        ticket_id=request.POST.get("ticket_id")
+        t = Ticket.objects.filter(pk=ticket_id)
+        t.delete()
+        return redirect('tickets:book-ticket')
+    context = {'user':Passenger.objects.get(pk=request.session.get("customer_id")),
+               'trip':Trip.objects.get(pk=request.session.get("trip_id")),
+               'ticket':Ticket.objects.get(pk=request.session.get("ticket_id"))
+            }
+    return render(request, 'tickets/confirm-remove.html', context)
+
 def passenger_login_view(request):
     if request.method == 'POST':
+        if request.POST.get("customer_id"):
+            request.session['customer_id'] = request.POST.get("customer_id")
+            return redirect('tickets:book-ticket')
         form=LoginForm(request.POST)
         if form.is_valid():
             customer_id=form.cleaned_data["customer_id"]
