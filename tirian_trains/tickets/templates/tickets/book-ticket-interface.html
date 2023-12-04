@@ -6,14 +6,29 @@
 <h1>Book a Ticket</h1>
 <h3>Logged in as User {{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}</h3>
 <h2>Your Current Trips:</h2>
+Total Cost: {{ totalCost }} Lion Coins
+<table>
+<tr>
+  <th>Trip #</th>
+  <th>Origin</th>
+  <th>Destination</th>
+  <th>Departure</th>
+  <th>Arrival</th>
+  <th>Duration</th>
+  <th>Cost</th>
+  <th>Cancel</th>
+</tr>
 {% for ticket in currentTickets %}
-  <div>
-    <h3>Trip #{{ ticket.trip.trip_id }}</h3>
-    <p>
-    From {{ ticket.trip.route.start_station.name }}<br>
-    To {{ ticket.trip.route.end_station.name }}<br>
-    {{ ticket.trip.departure|date:"M d, Y H:i" }} - {{ ticket.trip.arrival|date:"M d, Y H:i" }} ({{ ticket.trip.get_duration }})<br>
-    </p>
+  <tr>
+    <td>{{ ticket.trip.trip_id }}</td>
+    <td>{{ ticket.trip.route.start_station.name }}</td>
+    <td>{{ ticket.trip.route.end_station.name }}</td>
+    <!-- ticket.trip.departure|date:"M d, Y H:i" -->
+    <td>{{ ticket.trip.departure|date:"M d, Y H:i" }}</td>
+    <td>{{ ticket.trip.arrival|date:"M d, Y H:i" }}</td>
+    <td>{{ ticket.trip.get_duration }}</td>
+    <td>{{ ticket.trip.route.price }} Lion Coins</td>
+    <td>
     <form action="/book-ticket" method='POST'>
       {% csrf_token %}
       <input type="hidden" id="remove" name="remove" value="remove">
@@ -22,26 +37,41 @@
       <input type="hidden" id="ticket_id" name="ticket_id" value={{ ticket.ticket_id }}>
       <input type="submit" value="Cancel Trip">
     </form>
-  </div>  
+    </td>
+  </tr>  
 {% endfor %}
+</table>
+
 <h2>Available Trips</h2>
+<table>
+  <tr>
+    <th>Trip #</th>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th>Departure</th>
+    <th>Arrival</th>
+    <th>Duration</th>
+    <th>Cost</th>
+    <th>Book Ticket</th>
+  </tr> 
 {% for trip in Trips %}
-  <div>
-    <h3>Trip #{{ trip.trip_id }}</h3>
-    <p>
-    From {{ trip.route.start_station.name }}<br>
-    To {{ trip.route.end_station.name }}<br>
-    {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
-    </p>
-    <p>
-    {{ trip.route.price }} Lion Coins
-    </p>
-    <form action="/book-ticket" method='POST'>
-      {% csrf_token %} 
-      <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
-      <input type="hidden" id="trip_id" name="trip_id" value={{ trip.trip_id }}>
-      <input type="submit" value="Book">
-    </form>
-  </div>
+  <tr>
+    <td>{{ trip.trip_id }}</td>
+    <td>{{ trip.route.start_station.name }}</td>
+    <td>{{ trip.route.end_station.name }}</td>
+    <td>{{ trip.departure|date:"M d, Y H:i" }}</td>
+    <td>{{ trip.arrival|date:"M d, Y H:i" }}</td>
+    <td>{{ trip.get_duration }}</td>
+    <td>{{ trip.route.price }} Lion Coins</td>
+    <td>
+      <form action="/book-ticket" method='POST'>
+        {% csrf_token %} 
+        <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
+        <input type="hidden" id="trip_id" name="trip_id" value={{ trip.trip_id }}>
+        <input type="submit" value="Book">
+      </form>
+    </td>    
+  </tr>
 {% endfor %}
+</table>
 {% endblock %}
