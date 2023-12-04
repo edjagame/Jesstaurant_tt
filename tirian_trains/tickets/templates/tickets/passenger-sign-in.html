@@ -11,6 +11,7 @@
         </div>
 </nav>
 
+
 <div class="container-fluid mt-2 p-4 pb-2 rounded" style="width: 400px; background-color: #660000;">
     <div class="text-center">
         <h4 class="pb-1" style="font-family: 'Open Sans', sans-serif; color: #e6efe4;">To continue booking, create or log into an account.</h4>
@@ -23,8 +24,7 @@
     </div>
 </div>
 
-<div class="container-fluid" style="background:#000301; width: 100%">
-    <footer class="py-1">
+    <footer class="py-1 fixed-bottom">
         <ul class="nav justify-content-center border-bottom py-3">
         <li class="nav-item"><a href="{% url 'tickets:homepage' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Home</a></li>
         <li class="nav-item"><a href="{% url 'tickets:passenger-sign-in' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Book</a></li>
@@ -32,6 +32,6 @@
         </ul>
         <p class="text-center text-muted py-3">© 2023 Tirian Trains, Inc</p>
     </footer>
-</div>
+
  
 {% endblock %}
