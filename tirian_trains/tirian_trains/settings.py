@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tickets',
     'scheduled_trips',
-    'trains'
+    'trains',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [

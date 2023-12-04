@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   {% load static %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
   <head>
     <link rel="stylesheet" href="{% static 'django_hotdog_stylesheet.css' %}">
     <title>{% block title %}My amazing site{% endblock %}</title>
