@@ -31,6 +31,7 @@ class Train(models.Model):
     
 
 class Maintenance(models.Model):
+    train=models.ForeignKey(Train, on_delete=models.CASCADE)
     maintenance_id = models.IntegerField(primary_key=True, default=000000)
     date = models.DateField(default=datetime.date.today)
     crew_in_charge = models.CharField(max_length=200, default="John Doe")
