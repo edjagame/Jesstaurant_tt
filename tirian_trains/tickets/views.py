@@ -27,10 +27,14 @@ def book_ticket_interface_view(request):
     currentTickets = list(Ticket.objects.raw("""
                                         SELECT ticket_id 
                                         FROM tickets_ticket 
-                                        WHERE passenger_id = %s""",[customer_id])) 
+                                        WHERE passenger_id = %s""",[customer_id]))
+    totalCost = 0
+    for ticket in currentTickets: 
+        totalCost+=ticket.trip.route.price
     context = {'user':Passenger.objects.get(pk=customer_id),
                'Trips':Trip.objects.all(),
-               'currentTickets':currentTickets
+               'currentTickets':currentTickets,
+               'totalCost':totalCost
                }
     return render(request, 'tickets/book-ticket-interface.html', context)
 
