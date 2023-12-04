@@ -2,22 +2,46 @@
 {% load static %}
 {% block title %} User Login {% endblock %}
 {% block content %}
-  <h1>Login with User ID</h1>
-  {{ form.non_field_errors }}
-  {% for field in form %}
-    {% if field.errors %}
-      <p>{{ field.label }} has the following errors:</p>
-      <ul>
-      {% for error in field.errors %}
-        <li>{{ error }}</li>
+<nav class="navbar p-3 px-4" style="background: #000301; width:100%; display: flex;">
+  <div class="container-fluid">
+      <div class="navbar-header mx-3">
+          <a href="{% url 'tickets:homepage' %}">
+              <img class="img-responsive" src="{% static 'tirian-logo.png' %}" width="50" height="50">
+          </a>
+      </div>
+</nav>
+
+<div class="container-fluid mt-2 p-4 rounded" style="width: 400px; background-color: #660000; font-family: 'Open Sans', sans-serif; color: #e6efe4;">
+  <div class="text-center">
+      <h4 class="pb-1" style="font-family: 'Open Sans', sans-serif; color: #e6efe4;">Sign in with User ID.</h4>
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        {% if field.errors %}
+          <p>{{ field.label }} has the following errors:</p>
+          <ul>
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
       {% endfor %}
+      <form action="/login" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br><br><b><button class="btn" type="submit" style="background-color: #e2d6b2; color: #000301; font-family: 'Open Sans', sans-serif;">Login</button></b>
+      </form>
+  </div>
+</div>
+
+<div class="container-fluid" style="background:#000301; width: 100;">
+  <footer class="py-1">
+      <ul class="nav justify-content-center border-bottom py-3">
+      <li class="nav-item"><a href="{% url 'tickets:homepage' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Home</a></li>
+      <li class="nav-item"><a href="{% url 'tickets:passenger-sign-in' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Book</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Pricing</a></li>
       </ul>
-    {% endif %}
-  {% endfor %}
-  <form action="/login" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Login">
-  </form>
+      <p class="text-center text-muted py-3">© 2023 Tirian Trains, Inc</p>
+  </footer>
+</div>
 
 {% endblock %}
