@@ -2,36 +2,58 @@
 {% load static %}
 {% block title %} Tirian Trains {% endblock %}
 {% block content %}
+<header>
+  <nav class="navbar p-3 px-4" style="background: #000301; width:100%; display: flex;">
+    <div class="container-fluid">
+        <div class="navbar-header mx-3">
+            <a href="{% url 'tickets:homepage' %}">
+                <img class="img-responsive" src="{% static 'tirian-logo.png' %}" width="50" height="50">
+            </a>
+        </div>
+  </nav>
+</header>
 
-<h1>Book a Ticket</h1>
-<h3>Logged in as User {{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}</h3>
-<h2>Your Current Trips:</h2>
+<div class="container-fluid p-5 has-bg-img"
+  style="color: #e6efe4; background-image: url('static/home-bg.png'); background-size: cover; width: 100%; height:100vh;">
+<h1 style="color: #e6efe4; text-align: center; font-family: 'Noto Serif', serif;">Book a Ticket</h1>
+<h3 style="font-family: 'Noto Serif', serif;">Logged in as User {{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}</h3>
+<h2 style="font-family: 'Noto Serif', serif;">Your Current Trips:</h2>
+
+<div style="padding:15px;" class="border-white p-3 bg-info bg-opacity-10 border border-info rounded-3">
 {% for ticket in currentTickets %}
-  <div>
-    <h3>Trip #{{ ticket.trip.trip_id }}</h3>
-    <p>
-    From {{ ticket.trip.route.start_station.name }}<br>
-    To {{ ticket.trip.route.end_station.name }}<br>
-    {{ ticket.trip.departure|date:"M d, Y H:i" }} - {{ ticket.trip.arrival|date:"M d, Y H:i" }} ({{ ticket.trip.get_duration }})<br>
-    </p>
-    <form action="/book-ticket" method='POST'>
-      {% csrf_token %}
-      <input type="hidden" id="remove" name="remove" value="remove">
-      <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
-      <input type="hidden" id="trip_id" name="trip_id" value={{ ticket.trip.trip_id }}>
-      <input type="hidden" id="ticket_id" name="ticket_id" value={{ ticket.ticket_id }}>
-      <input type="submit" value="Cancel Trip">
-    </form>
-  </div>  
+ 
+  <h3>Trip #{{ ticket.trip.trip_id }}</h3>
+  <p>
+  From: {{ ticket.trip.route.start_station.name }}<br>
+  To: {{ ticket.trip.route.end_station.name }}<br>
+  Trip Schedule: {{ ticket.trip.departure|date:"M d, Y H:i" }} - {{ ticket.trip.arrival|date:"M d, Y H:i" }} ({{ ticket.trip.get_duration }})<br>
+  </p>
+  
+  <form action="/book-ticket" method='POST'>
+    {% csrf_token %}
+    <input type="hidden" id="remove" name="remove" value="remove">
+    <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
+    <input type="hidden" id="trip_id" name="trip_id" value={{ ticket.trip.trip_id }}>
+    <input type="hidden" id="ticket_id" name="ticket_id" value={{ ticket.ticket_id }}>
+    <div class="position-absolute mid-center">
+    <input type="submit" value="Cancel Trip">
+    </div>
+    <br><br>
+  </form>
 {% endfor %}
-<h2>Available Trips</h2>
+</div> 
+<br>
+
+<h2 style="font-family: 'Noto Serif', serif;">Available Trips:</h2>
+<div style="padding:15px;" class="border-white p-3 bg-info bg-opacity-10 border border-info rounded-3">
+
 {% for trip in Trips %}
   <div>
     <h3>Trip #{{ trip.trip_id }}</h3>
     <p>
-    From {{ trip.route.start_station.name }}<br>
-    To {{ trip.route.end_station.name }}<br>
-    {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
+    From: {{ trip.route.start_station.name }}<br>
+    To: {{ trip.route.end_station.name }}<br>
+    Trip Schedule: {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
     </p>
     <p>
     {{ trip.route.price }} Lion Coins
@@ -41,7 +63,20 @@
       <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
       <input type="hidden" id="trip_id" name="trip_id" value={{ trip.trip_id }}>
       <input type="submit" value="Book">
+      <br><br>
     </form>
   </div>
 {% endfor %}
+</div>
+
+<div class="container-fluid footer" style="background:#000301; width: 100%;">
+  <footer class="py-2">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a href="{% url 'tickets:homepage' %}" class="nav-link px-2 text-muted">Home</a></li>
+      <li class="nav-item"><a href="{% url 'tickets:passenger-sign-in' %}" class="nav-link px-2 text-muted">Book</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+      </ul>
+      <p class="text-center text-muted">© 2022 Tirian Trains, Inc</p>
+  </footer>
+</div>
 {% endblock %}
