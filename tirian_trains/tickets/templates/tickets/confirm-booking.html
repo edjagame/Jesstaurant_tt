@@ -2,25 +2,64 @@
 {% load static %}
 {% block title %} Confirmation Screen {% endblock %}
 {% block content %}
+<nav class="navbar p-3 px-4" style="background: #000301; width:100%; display: flex;">
+    <div class="container-fluid">
+        <div class="navbar-header mx-3">
+            <a href="{% url 'tickets:homepage' %}">
+                <img class="img-responsive" src="{% static 'tirian-logo.png' %}" width="50" height="50">
+            </a>
+        </div>
+</nav>
 
-<h1>Confirm Booking</h1>
-<p>Please ensure all the trip details are correct
-<h2>Trip Details:</h2>
- <p>
-    From {{ trip.route.start_station.name }}<br>
-    To {{ trip.route.end_station.name }}<br>
-    {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
-  </p>
-  <p>
-    {{ trip.route.price }} Lion Coins
-  </p>
-  <p>
-    Passenger #{{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}
-  </p>
-  <form action="/confirm-booking" method='POST'>
-      {% csrf_token %} 
-      <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
-      <input type="hidden" id="trip_id" name="trip_id" value={{ trip.trip_id }}>
-      <input type="submit" value="Confirm Booking">
-    </form>
+<div class="container-fluid p-5 has-bg-img"
+    style="background-image: url('static/confirm-bg.jpg'); background-size: cover; width: 100%; height:100vh;">
+    <div>
+    <h2 style="color: #e6efe4; text-align: center; font-family: 'Noto Serif', serif;">Please ensure all the trip details are correct</h2>
+
+    <div class="container-fluid mt-2 p-4 pb-2 rounded" style="width: 800px; background-color: #660000;">
+        <div class="text-center">
+          <div class="container-fluid">
+            <img src="{% static 'tirian-logo.png' %}" width="50" height="50">
+          </div>
+            <h5 class="pb-1" style="font-family: 'Open Sans', sans-serif; color: #e6efe4;"><br>
+                <p>
+                  Passenger #{{ user.customer_id }}: {{ user.given_name }} {{ user.middle_initial }} {{user.last_name }}
+                </p>
+               <p>
+                  From {{ trip.route.start_station.name }}<br>
+                  To {{ trip.route.end_station.name }}<br>
+                  <br>
+                  {{ trip.departure|date:"M d, Y H:i" }} - {{ trip.arrival|date:"M d, Y H:i" }} ({{ trip.get_duration }})<br>
+                </p>
+                <p>
+                  {{ trip.route.price }} Lion Coins
+                </p>
+            </h5>
+        </div>
+    </div>
+
+    <div class="text-center p-3">
+        <form action="/confirm-booking" method='POST'>
+            <b><button class="btn btn-lg" type="submit" style="border-color: #660000; color: #e6efe4; background-color: #270013; font-family: 'Open Sans', sans-serif;">Confirm</button></b>
+            {% csrf_token %}
+            <input type="hidden" id="customer_id" name="customer_id" value={{ user.customer_id }}>
+            <input type="hidden" id="trip_id" name="trip_id" value={{ trip.trip_id }}>
+        </form>
+        <br>
+        <form action="/book-ticket" method='submit'>
+            <b><button class="btn btn-sm" type="submit" style="border-color: #660000; color: #e6efe4; background-color: #270013; font-family: 'Open Sans', sans-serif;">Return to Bookings</button></b>
+        </form>
+    </div>
+    </div>
+</div>
+<div class="container-fluid" style="background:#000301; width: 100%">
+    <footer class="py-1">
+        <ul class="nav justify-content-center border-bottom py-3">
+        <li class="nav-item"><a href="{% url 'tickets:homepage' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Home</a></li>
+        <li class="nav-item"><a href="{% url 'tickets:passenger-sign-in' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Book</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Pricing</a></li>
+        </ul>
+        <p class="text-center text-muted py-3">© 2022 Tirian Trains, Inc</p>
+    </footer>
+</div>
 {% endblock %}

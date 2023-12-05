@@ -2,19 +2,36 @@
 {% load static %}
 {% block title %} Tirian Trains Login {% endblock %}
 {% block content %}
+<nav class="navbar p-3 px-4" style="background: #000301; width:100%; display: flex;">
+    <div class="container-fluid">
+        <div class="navbar-header mx-3">
+            <a href="{% url 'tickets:homepage' %}">
+                <img class="img-responsive" src="{% static 'tirian-logo.png' %}" width="50" height="50">
+            </a>
+        </div>
+</nav>
 
 
-<h1>Login or Create User to book a ticket.</h1>
+<div class="container-fluid mt-2 p-4 pb-2 rounded" style="width: 400px; background-color: #660000;">
+    <div class="text-center">
+        <h4 class="pb-1" style="font-family: 'Open Sans', sans-serif; color: #e6efe4;">To continue booking, create or log into an account.</h4>
+        <form class="m-3" action="{% url 'tickets:passenger-create' %}">
+            <b><button class="btn" type="submit" style="background-color: #e2d6b2; color: #000301; font-family: 'Open Sans', sans-serif;">Sign Up</button></b>
+        </form>
+        <form class="m-3" action="{% url 'tickets:passenger-login' %}">
+            <b><button class="btn" type="submit" style="background-color: #e2d6b2; color: #000301; font-family: 'Open Sans', sans-serif;">Sign In</button></b>
+        </form>
+    </div>
+</div>
 
-<form action="{% url 'tickets:passenger-login' %}">
-    <input type="submit" value="Login" />
-</form>
-
-<h2>OR</h2>
-
-<form action="{% url 'tickets:passenger-create' %}">
-    <input type="submit" value="Create User" />
-</form>
+    <footer class="py-1 fixed-bottom">
+        <ul class="nav justify-content-center border-bottom py-3">
+        <li class="nav-item"><a href="{% url 'tickets:homepage' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Home</a></li>
+        <li class="nav-item"><a href="{% url 'tickets:passenger-sign-in' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Book</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Pricing</a></li>
+        </ul>
+        <p class="text-center text-muted py-3">© 2023 Tirian Trains, Inc</p>
+    </footer>
 
  
 {% endblock %}

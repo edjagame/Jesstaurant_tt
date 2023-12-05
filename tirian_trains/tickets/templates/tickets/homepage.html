@@ -2,11 +2,38 @@
 {% load static %}
 {% block title %} Tirian Trains {% endblock %}
 {% block content %}
+<nav class="navbar p-3 px-4" style="background: #000301; width:100%; display: flex;">
+    <div class="container-fluid">
+        <div class="navbar-header mx-3">
+            <a href="{% url 'tickets:homepage' %}">
+                <img class="img-responsive" src="{% static 'tirian-logo.png' %}" width="50" height="50">
+            </a>
+        </div>
+</nav>
 
-<h1>Welcome to Tirian Trains</h1>
+<div class="container-fluid p-5 has-bg-img"
+    style="background-image: url('static/home-bg.png'); background-size: cover; width: 100%; height:100vh;">
+    <div>
+        <img class="img-responsive mx-auto d-block p-3" src="{% static 'tirian-logo-text.png' %}" width="700">
+    <h2 style="color: #e6efe4; text-align: center; font-family: 'Noto Serif', serif;">Your tier-one travel companion.</h2>
+    
+    <div class="text-center p-3">
+        <form action="{% url 'tickets:passenger-sign-in' %}">
+            <b><button class="btn btn-outline-danger btn-lg" type="submit" style="border-color: #660000; color: #e6efe4; font-family: 'Open Sans', sans-serif;">Book Ticket</button></b>
+        </form>
+    </div>
+    </div>
+</div>
 
-<form action="{% url 'tickets:passenger-sign-in' %}">
-    <input type="submit" value="Book Ticket" />
-</form>
+<div class="container-fluid" style="background:#000301; width: 100%;">
+    <footer class="py-1">
+        <ul class="nav justify-content-center border-bottom py-3">
+        <li class="nav-item"><a href="{% url 'tickets:homepage' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Home</a></li>
+        <li class="nav-item"><a href="{% url 'tickets:passenger-sign-in' %}" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Book</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" style="color: #e6efe4; text-align: center; font-family: 'Open Sans', sans-serif;">Pricing</a></li>
+        </ul>
+        <p class="text-center text-muted py-3">© 2023 Tirian Trains, Inc</p>
+    </footer>
+</div>
  
 {% endblock %}
